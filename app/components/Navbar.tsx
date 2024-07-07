@@ -4,11 +4,11 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 
 export const navLinks: { label: string; href: string }[] = [
-  { label: "Formal shoes", href: "/" },
-  { label: "Casual shoes", href: "/" },
-  { label: "Sneakers", href: "/" },
-  { label: "Converse", href: "/" },
-  { label: "Boots", href: "/" },
+  { label: "Formal shoes", href: "/category/formal" },
+  { label: "Casual shoes", href: "/category/casual" },
+  { label: "Sneakers", href: "/category/sneakers" },
+  { label: "Converse", href: "/category/converse" },
+  { label: "Boots", href: "/category/boots" },
 ];
 
 const Navbar = () => {

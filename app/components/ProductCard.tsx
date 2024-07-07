@@ -1,22 +1,21 @@
 import React from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { products } from "../api/products/productsData";
 interface Props {
-  src: string;
+  src: string[];
   name: string;
   price: string;
   productCode: string;
 }
 const ProductCard = ({ src, name, price, productCode }: Props) => {
+  const source = src[0]
   return (
     <div className="w-full max-w-[400px] h-[350px] sm:h-[450px] rounded-md rounded-t-none overflow-hidden ">
       <Card className="p-0">
         <CardContent className="p-0">
           <div className="w-full h-[200px] sm:h-[250px] relative">
-            <Image src={src} alt={name} fill objectFit="cover" />
+            <Image src={source} alt={name} fill objectFit="cover" />
           </div>
           <p className="p-3 font-semibold h-[60px]">{name}</p>
           <p className="px-3 mt-2 text-sm md:text-lg font-bold text-primary">

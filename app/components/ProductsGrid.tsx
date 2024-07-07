@@ -3,9 +3,10 @@ import ProductCard from "./ProductCard";
 
 interface Props {
   title?: string;
-  data: { name: string; imgSrc: string; price: string; productCode: string }[];
+  data: { name: string; imgSrc: string[]; price: string; productCode: string }[];
 }
 const ProductsGrid = ({ title, data }: Props) => {
+  
   return (
     <div className="flex flex-col items-center justify-center my-5 w-full">
       <h1 className="font-semibold text-3xl mt-6">{title}</h1>

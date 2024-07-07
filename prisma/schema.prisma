@@ -9,6 +9,25 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Products {
+  id          Int            @id @default(autoincrement())
+  name        String
+  images      ImageSources[]
+  price       Int
+  category    String
+  discount    Decimal        @default(0)
+  productCode String         @unique
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model ImageSources {
+  id        Int      @id @default(autoincrement())
+  source    String
+  product   Products @relation(fields: [productId], references: [id])
+  productId Int
 }

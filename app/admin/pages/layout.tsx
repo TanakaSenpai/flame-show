@@ -9,9 +9,9 @@ const AdminLayout = ({
 }>) => {
     return <div className='flex'>
         <div className=""><AdminSidebar /></div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
             <AdminNavbar />
-            <div className="">
+            <div className="p-5">
                 {children}
             </div>
         </div>

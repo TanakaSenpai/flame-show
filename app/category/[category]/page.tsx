@@ -1,9 +1,8 @@
 import ProductsGrid from '@/app/components/ProductsGrid';
 import React, { useEffect } from 'react'
+import { products } from '@/app/api/products/productsData';
 
-const CategoryPage = async ({ params }: { params: { category: string } }) => {
-    const res = await fetch("http://localhost:3000/api/products");
-    const products = await res.json();
+const CategoryPage = ({ params }: { params: { category: string } }) => {
     const filteredProducts = products.filter(
       (product) => product.category === params.category
     );

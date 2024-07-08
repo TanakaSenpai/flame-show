@@ -12,9 +12,3 @@ export function GET(
 
     return NextResponse.json(product);
 }
-
-export function getProductDetails( productCode: string) {
-  const product = products.find((obj) => obj.productCode === productCode);
-
-  return product;
-}

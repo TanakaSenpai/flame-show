@@ -12,5 +12,8 @@ export function GET(
 
     return NextResponse.json(product);
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7a0c35c341b9225822b62419054a5179395b07d2

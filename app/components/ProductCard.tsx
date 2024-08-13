@@ -3,19 +3,18 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 interface Props {
-  src: string[];
+  imgUrl: string;
   name: string;
-  price: string;
+  price: number;
   productCode: string;
 }
-const ProductCard = ({ src, name, price, productCode }: Props) => {
-  const source = src[0]
+const ProductCard = ({ imgUrl, name, price, productCode }: Props) => {
   return (
     <div className="w-full max-w-[400px] h-[350px] sm:h-[450px] rounded-md rounded-t-none overflow-hidden ">
       <Card className="p-0">
         <CardContent className="p-0">
           <div className="w-full h-[200px] sm:h-[250px] relative">
-            <Image src={source} alt={name} fill objectFit="cover" />
+            <Image src={imgUrl} alt="Product image" fill objectFit="cover" />
           </div>
           <p className="p-3 font-semibold h-[60px]">{name}</p>
           <p className="px-3 mt-2 text-sm md:text-lg font-bold text-primary">

@@ -1,5 +1,4 @@
 import ProductsGrid from '@/app/components/ProductsGrid';
-import React, { useEffect } from 'react'
 import { products } from '@/app/api/products/productsData';
 
 const CategoryPage = ({ params }: { params: { category: string } }) => {
@@ -9,6 +8,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
 
     return (
       <div>
+        <p className='capitalize font-semibold px-4 pt-4 text-sm'>Home {">"} { params.category }</p>
             <ProductsGrid data={filteredProducts} />
       </div>
       

@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./components/Navbar";
 import MobileNav from "./components/MobileNav";
+import Footer from "./components/Footer";
 
 const LayoutCheck = ({
   children,
@@ -20,7 +21,8 @@ const LayoutCheck = ({
             <Navbar />
             <MobileNav />
           </div>
-          <div className="">{children}</div>
+            <div className="">{children}</div>
+            <footer><Footer /></footer>
         </main>
       )}
     </>

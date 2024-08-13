@@ -3,10 +3,10 @@ import ProductCard from "./ProductCard";
 
 interface Props {
   title?: string;
-  data: { name: string; imgSrc: string[]; price: string; productCode: string }[];
+  data: { name: string; imgUrls: string[]; price: number; productCode: string }[];
 }
 const ProductsGrid = ({ title, data }: Props) => {
-  
+  console.log(data)
   return (
     <div className="flex flex-col items-center justify-center my-5 w-full">
       <h1 className="font-semibold text-3xl mt-6">{title}</h1>
@@ -14,7 +14,7 @@ const ProductsGrid = ({ title, data }: Props) => {
         {data.map((item) => (
           <ProductCard
             key={item.productCode}
-            src={item.imgSrc}
+            imgUrl={item.imgUrls?.[0]}
             name={item.name}
             price={item.price}
             productCode={item.productCode}

@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const ImageSlider = ({ imgSrc }: { imgSrc: string[] }) => {
+const ImageSlider = ({ imgUrls }: { imgUrls: string[] }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -17,7 +17,7 @@ const ImageSlider = ({ imgSrc }: { imgSrc: string[] }) => {
   return (
       <div className="w-[300px]">
       <Slider {...settings}>
-        {imgSrc.map((element) => (
+        {imgUrls.map((element) => (
           <Image
             key={element}
             src={element}

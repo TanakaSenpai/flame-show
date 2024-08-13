@@ -64,7 +64,7 @@ const AdminProductsTable = () => {
       <TableBody>
         {products.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="">
+            <TableCell>
               <Image src={item.imgUrls[0]} alt="shoe" width={45} height={45} />
             </TableCell>
             <TableCell>{item.name}</TableCell>
@@ -79,7 +79,7 @@ const AdminProductsTable = () => {
             </TableCell>
             <TableCell className="text-right">
               <AdminProductsEdit item={item} />
-              <AdminProductsDelete id={item.id} />
+              <AdminProductsDelete id={item.id!} />
             </TableCell>
           </TableRow>
         ))}

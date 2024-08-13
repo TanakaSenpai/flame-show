@@ -43,11 +43,11 @@ const ViewProduct = ({params: productCode}: {params: {productCode: string}}) => 
           <p className="p-4 capitalize text-sm font-semibold">
             Home {">"} {product.category} {">"} {product.name}
           </p>
-          <div className="flex container py-4 mb-6">
+          <div className="flex flex-col lg:flex-row container gap-10 lg:gap-0 py-4 mb-6">
             <div className="w-2/4">
               <ImageSlider imgUrls={product.imgUrls} />
             </div>
-            <div className="flex-flex-col">
+            <div className="flex flex-col">
               <p>
                 Product code:{" "}
                 <span className="font-semibold">{product.productCode}</span>

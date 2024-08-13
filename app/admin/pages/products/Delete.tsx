@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-const AdminProductsDelete = ({id}: {id: string}) => {
+const AdminProductsDelete = ({id}: {id?: string}) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

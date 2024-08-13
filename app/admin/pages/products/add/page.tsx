@@ -17,16 +17,17 @@ import {
 } from "@/components/ui/select";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {v4} from "uuid"
 
 const AddProductPage = () => {
+  const router = useRouter();
   const [images, setImages] = useState<File[]>([]);
   const [isLoading, setLoading] = useState(false);
 
   const [name, setName] = useState("");
-  const [imgUrls, setImgUrls] = useState<string[]>([]);
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [colors, setColors] = useState("");
@@ -52,52 +53,80 @@ const AddProductPage = () => {
     setImages(files);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    images.forEach(async (image) => {
-      try {
-        const storageRef = ref(storage, `images/${image.name, "-", v4()}`);
-        const upload = await uploadBytes(storageRef, image);
-        const imgUrl = await getDownloadURL(upload.ref);
-        setImgUrls([...imgUrls, imgUrl]);
-        console.log(imgUrl)
-        console.log(imgUrls)
-        
-      } catch (error) {
-        setLoading(false)
-        console.log("Error uploading: ", error)
-        toast.error("An error has occurred")
-        return null;
-      }
-    });
-    console.log(imgUrls)
-    try {
-      const isDupliCode = await checkCodeExists('products', "productCode", productCode)
-      if(isDupliCode) {
-        toast.error("Product code already exists!")
-        setLoading(false)
-        return
-      }
-      if (!name || !imgUrls || !price || !colors || !productCode || !stock) {
-        toast.error("Please fill up all the fields")
-        return
-      }
-      await addPost({ name, imgUrls, price, colors, category, productCode, stock })
-      toast.success("Product added successfully!");
-      setName("")
-      setImgUrls([])
-      setCategory("")
-      setPrice(0)
-      setColors("")
-      setCode("")
-      setStock("")
-    } catch (error) {
-      setLoading(false)
-      console.log("Error adding post: ", error)
+const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+
+  // Handle potential errors during upload
+  try {
+    // Prepare an empty array to store download URLs
+    const imgUrls = [];
+
+    // Iterate over each selected image
+    for (const image of images) {
+      const storageRef = ref(storage, `images/${image.name}-${v4()}`); // Generate unique filenames
+
+      // Upload the image to Firestore Storage
+      const uploadTask = await uploadBytes(storageRef, image);
+      const downloadUrl = await getDownloadURL(uploadTask.ref);
+
+      // Add the download URL to the array
+      imgUrls.push(downloadUrl);
     }
-    setLoading(false)
-  };
+
+    // Check for duplicate product code before adding data to Firestore
+    const isDupliCode = await checkCodeExists(
+      "posts",
+      "productCode",
+      productCode
+    );
+    if (isDupliCode) {
+      toast.error("Product code already exists!");
+      setLoading(false);
+      return;
+    }
+
+    // Validate required fields before adding data to Firestore
+    if (
+      !name ||
+      !imgUrls.length ||
+      !price ||
+      !colors ||
+      !productCode ||
+      !stock
+    ) {
+      toast.error("Please fill up all the fields");
+      setLoading(false);
+      return;
+    }
+
+    // Create a Firestore document for the product
+    await addPost({
+      name,
+      imgUrls,
+      price,
+      colors,
+      category,
+      productCode,
+      stock,
+    });
+
+    toast.success("Product added successfully!");
+    setName("");
+    setCategory("");
+    setPrice(0);
+    setColors("");
+    setCode("");
+    setStock("");
+    router.push("/admin/pages/products")
+  } catch (error) {
+    setLoading(false);
+    console.error("Error: ", error);
+    toast.error("An error occurred. Please try again.");
+  } finally {
+    setLoading(false); // Ensure loading state is reset even on errors
+  }
+};
 
   return (
     <div className="container p-10">

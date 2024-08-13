@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/table";
 import AdminCategoryDelete from "./Delete";
 import AdminCategoryEdit from "./Edit";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/configs/firebase";
 import { useEffect, useState } from "react";
 
 const AdminCategoriesTable = () => {
-  const [categories, setCategories] = useState<{ id: string; category?: string }[]>([]); 
+  const [categories, setCategories] = useState<{ id: string; category: string }[]>([]); 
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const AdminCategoriesTable = () => {
         const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
           const fetchedCategories = snapshot.docs.map((doc) => ({
             id: doc.id,
-            ...doc.data(),
+            category: doc.data().category,
           }));
           setCategories(fetchedCategories);
           setLoading(false);

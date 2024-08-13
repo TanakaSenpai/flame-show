@@ -1,7 +1,7 @@
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../configs/firebase";
 
-export interface Post {
+export interface Product {
   id?: string;
   name: string;
   imgUrls: string[];
@@ -24,10 +24,10 @@ const checkCodeExists = async (
   return querySnapshot.size > 0;
 };
 
-const addPost = async (data: Post) => {
-    const collectionRef = collection(db, "posts");
-    await addDoc(collectionRef, data)
-}
+const addPost = async (data: Product) => {
+  const collectionRef = collection(db, "posts");
+  await addDoc(collectionRef, data);
+};
 
 const getPosts = async () => {
   const collectionRef = collection(db, "posts");
@@ -35,11 +35,26 @@ const getPosts = async () => {
   const productList = docRef.docs.map(doc => {
     return {
       id: doc.id,
-     ...doc.data(),
-    } as Post;
+      ...doc.data(),
+    } as Product;
   })
 
   return productList;
 }
 
-export { checkCodeExists, addPost, getPosts };
+const updateProduct = async (
+  id: string,
+  { name, category, price, colors, productCode, stock }: Product
+) => {
+  const docRef = doc(db, "posts", id!);
+  await updateDoc(docRef, {
+    name,
+    category,
+    price,
+    colors,
+    productCode,
+    stock,
+  });
+};
+
+export { checkCodeExists, addPost, getPosts, updateProduct };

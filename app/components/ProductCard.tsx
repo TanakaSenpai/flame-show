@@ -10,7 +10,7 @@ interface Props {
 }
 const ProductCard = ({ imgUrl, name, price, productCode }: Props) => {
   return (
-    <div className="w-full max-w-[400px] h-[350px] sm:h-[450px] rounded-md rounded-t-none overflow-hidden ">
+    <div className="w-full max-w-[400px] h-[350px] sm:h-[450px] rounded-md overflow-hidden ">
       <Card className="p-0">
         <CardContent className="p-0">
           <div className="w-full h-[200px] sm:h-[250px] relative">

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -23,12 +23,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { getCategories } from "@/app/firebase/categories";
+import { Product, updateProduct } from "@/app/firebase/products";
 
 interface Props {
-  item: { name: string; category: string; price: number; inStock: string };
+  item: Product;
 }
 
 const AdminProductsEdit = ({ item }: Props) => {
+  const [name, setName] = useState(item.name);
+  const imgUrls = item.imgUrls;
+  const [category, setCategory] = useState(item.category);
+  const [price, setPrice] = useState(item.price);
+  const [colors, setColors] = useState(item.colors);
+  const [productCode, setProductCode] = useState(item.productCode);
+  const [stock, setStock] = useState(item.stock);
+
   const [categories, setCategories] = useState<
     { id: string; category: string }[]
   >([]);
@@ -44,6 +53,24 @@ const AdminProductsEdit = ({ item }: Props) => {
     };
     fetchCategories();
   }, []);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateProduct(item.id!, {
+        name,
+        imgUrls,
+        category,
+        price,
+        colors,
+        productCode,
+        stock,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,61 +83,102 @@ const AdminProductsEdit = ({ item }: Props) => {
             Make changes of the product here. Click save when {"you're"} done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value={item.name} className="col-span-3" />
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input
+                id="name"
+                value={name}
+                className="col-span-3"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Category
+              </Label>
+              <Select
+                onValueChange={(value) => setCategory(value)}
+                defaultValue={category}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Categories</SelectLabel>
+                    {categories.map((category) => (
+                      <SelectItem key={category.id} value={category.category}>
+                        <p className="capitalize">{category.category}</p>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Price
+              </Label>
+              <Input
+                id="name"
+                type="number"
+                value={price}
+                className="col-span-3"
+                onChange={(e) => setPrice(parseInt(e.target.value))}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Colors
+              </Label>
+              <Input
+                id="name"
+                value={colors}
+                className="col-span-3"
+                onChange={(e) => setColors(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Product code
+              </Label>
+              <Input
+                id="name"
+                value={productCode}
+                className="col-span-3"
+                onChange={(e) => setProductCode(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Stock
+              </Label>
+              <Select
+                defaultValue={stock}
+                onValueChange={(value) => setStock(value)}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="yes">In Stock</SelectItem>
+                    <SelectItem value="no">Out of Stock</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Category
-            </Label>
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select a category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Categories</SelectLabel>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.category}>
-                      <p className="capitalize">{category.category}</p>
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Price
-            </Label>
-            <Input id="name" value={item.price} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Stock
-            </Label>
-            <Select defaultValue={item.inStock}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="yes">In Stock</SelectItem>
-                  <SelectItem value="no">Out of Stock</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <DialogFooter>
-          <DialogClose>
+          <DialogFooter>
+            <DialogClose>
               <Button type="submit">Save changes</Button>
-          </DialogClose>
-        </DialogFooter>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

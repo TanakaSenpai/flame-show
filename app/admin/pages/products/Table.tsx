@@ -1,3 +1,4 @@
+'use client'
 import {
   Table,
   TableBody,
@@ -7,12 +8,45 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { products } from "@/app/api/products/productsData";
 import Image from "next/image";
 import AdminProductsDelete from "./Delete";
 import AdminProductsEdit from "./Edit";
+import { useEffect, useState } from "react";
+import { Product } from "@/app/firebase/products";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/app/configs/firebase";
 
 const AdminProductsTable = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setLoading] = useState(false);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const collectionRef = collection(db, "posts");
+        const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
+          const fetchedProducts = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+            imgUrls: doc.data().imgUrls,
+            price: doc.data().price,
+            colors: doc.data().colors,
+            category: doc.data().category,
+            productCode: doc.data().productCode,
+            stock: doc.data().stock,
+          }));
+          setProducts(fetchedProducts);
+          setLoading(false);
+        });
+
+        return () => unsubscribe();
+      } catch (error) {
+        console.error("Error: ", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
   return (
     <Table>
       <TableCaption>A list of all the products.</TableCaption>
@@ -26,6 +60,7 @@ const AdminProductsTable = () => {
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
+      {isLoading && <div className="text-lg text-center">Loading...</div>}
       <TableBody>
         {products.map((item) => (
           <TableRow key={item.id}>
@@ -37,10 +72,10 @@ const AdminProductsTable = () => {
             <TableCell>{item.price}</TableCell>
             <TableCell
               className={`text-right ${
-                item.inStock === "yes" ? "text-green-500" : "text-red-500"
+                item.stock === "yes" ? "text-green-500" : "text-red-500"
               }`}
             >
-              {item.inStock === "yes" ? "In Stock" : "Out of Stock"}
+              {item.stock === "yes" ? "In Stock" : "Out of Stock"}
             </TableCell>
             <TableCell className="text-right">
               <AdminProductsEdit item={item} />

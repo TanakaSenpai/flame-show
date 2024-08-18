@@ -19,9 +19,19 @@ const Footer = () => {
       </div>
       <div className="flex flex-col gap-2 items-center">
         <p className="text-slate-400 text-lg">Social links</p>
-        <div className='flex gap-4'>
-          <FaFacebook size={20} className="text-white cursor-pointer hover:text-gray-400" />
-          <FaInstagram size={20} className="text-white cursor-pointer hover:text-gray-400" />
+        <div className="flex gap-4">
+          <Link href="https://www.facebook.com/bestsneakersshoes">
+            <FaFacebook
+              size={20}
+              className="text-white cursor-pointer hover:text-gray-400"
+            />
+          </Link>
+          <Link href="https://www.instagram.com/flameshow1">
+            <FaInstagram
+              size={20}
+              className="text-white cursor-pointer hover:text-gray-400"
+            />
+          </Link>
         </div>
       </div>
     </div>

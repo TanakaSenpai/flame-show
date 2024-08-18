@@ -19,6 +19,7 @@ export interface Product {
   colors: string;
   category: string;
   productCode: string;
+  description?: string;
   stock: string;
   createdAt?: string;
 }
@@ -55,7 +56,7 @@ const getProducts = async () => {
 
 const updateProduct = async (
   id: string,
-  { name, category, price, colors, productCode, stock }: Product
+  { name, category, price, colors, productCode, description, stock }: Product
 ) => {
   const docRef = doc(db, "products", id!);
   await updateDoc(docRef, {
@@ -64,6 +65,7 @@ const updateProduct = async (
     price,
     colors,
     productCode,
+    description,
     stock,
   });
 };

@@ -24,18 +24,21 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { getCategories } from "@/app/firebase/categories";
 import { Product, updateProduct } from "@/app/firebase/products";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   item: Product;
 }
 
 const AdminProductsEdit = ({ item }: Props) => {
+  console.log(item)
   const [name, setName] = useState(item.name);
   const imgUrls = item.imgUrls;
   const [category, setCategory] = useState(item.category);
   const [price, setPrice] = useState(item.price);
   const [colors, setColors] = useState(item.colors);
   const [productCode, setProductCode] = useState(item.productCode);
+  const [description, setDescription] = useState(item.description);
   const [stock, setStock] = useState(item.stock);
 
   const [categories, setCategories] = useState<
@@ -64,6 +67,7 @@ const AdminProductsEdit = ({ item }: Props) => {
         price,
         colors,
         productCode,
+        description,
         stock,
       });
     } catch (error) {
@@ -152,6 +156,12 @@ const AdminProductsEdit = ({ item }: Props) => {
                 className="col-span-3"
                 onChange={(e) => setProductCode(e.target.value)}
               />
+            </div>
+            <div className="flex items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Description
+              </Label>
+              <Textarea className="w-full" value={description} onChange={(e) => setDescription(e.target.value)} />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">

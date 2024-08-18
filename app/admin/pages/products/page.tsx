@@ -27,6 +27,7 @@ const ProductsPage = () => {
               colors: doc.data().colors,
               category: doc.data().category,
               productCode: doc.data().productCode,
+              description: doc.data().description,
               stock: doc.data().stock,
             }));
             setProducts(fetchedProducts);

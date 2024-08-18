@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {v4} from "uuid"
+import { Textarea } from "@/components/ui/textarea";
 
 const AddProductPage = () => {
   const router = useRouter();
@@ -33,6 +34,7 @@ const AddProductPage = () => {
   const [price, setPrice] = useState(0);
   const [colors, setColors] = useState("");
   const [productCode, setCode] = useState("");
+  const [description, setDescription] = useState("");
   const [stock, setStock] = useState("");
   const createdAt = new Date().toLocaleString()
   
@@ -111,6 +113,7 @@ const handleSubmit = async (e: FormEvent) => {
       colors,
       category,
       productCode,
+      description,
       stock,
       createdAt
     });
@@ -121,6 +124,7 @@ const handleSubmit = async (e: FormEvent) => {
     setPrice(0);
     setColors("");
     setCode("");
+    setDescription("")
     setStock("");
     router.push("/admin/pages/products")
   } catch (error) {
@@ -192,7 +196,10 @@ const handleSubmit = async (e: FormEvent) => {
         </div>
         <div className="flex flex-col gap-4">
           <Label className="text-nowrap">Product Category:</Label>
-          <Select onValueChange={(value) => setCategory(value)} value={category}>
+          <Select
+            onValueChange={(value) => setCategory(value)}
+            value={category}
+          >
             <SelectTrigger className="w-[280px] border-slate-400">
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
@@ -222,6 +229,12 @@ const handleSubmit = async (e: FormEvent) => {
           />
         </div>
         <div className="flex flex-col gap-4">
+          <Label htmlFor="code" className="text-nowrap">
+            Descriptiondescriptionription:
+          </Label>
+          <Textarea placeholder="Type description here." onChange={(e) => setDescription(e.target.value)} />
+        </div>
+        <div className="flex flex-col gap-4">
           <Label className="text-nowrap">Stock:</Label>
           <Select onValueChange={(value) => setStock(value)} value={stock}>
             <SelectTrigger className="w-[280px] border-slate-400">
@@ -236,13 +249,17 @@ const handleSubmit = async (e: FormEvent) => {
           </Select>
         </div>
         <div className="mt-8 flex items-center">
-          <Button type="submit" className="text-center w-[116px]" disabled={isLoading} >
+          <Button
+            type="submit"
+            className="text-center w-[116px]"
+            disabled={isLoading}
+          >
             {isLoading ? <Spinner className="w-[20px]" /> : "Add Product"}
           </Button>
-          <Link href="/admin/pages/products" >
-          <Button type="button" className="ml-4" variant="secondary">
-            Cancel
-          </Button>
+          <Link href="/admin/pages/products">
+            <Button type="button" className="ml-4" variant="secondary">
+              Cancel
+            </Button>
           </Link>
         </div>
       </form>

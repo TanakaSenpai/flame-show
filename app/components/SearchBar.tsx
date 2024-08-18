@@ -29,7 +29,12 @@ const SearchBar = () => {
 
   return (
     <div className="flex-col justify-center items-center space-x-2 py-1 w-full lg:w-[450px]">
-      <div className="flex w-full mx-5">
+      <form
+        className="flex w-full mx-5"
+        onSubmit={() => {
+          handleChange(searchQuery);
+        }}
+      >
         <Command className="w-full">
           <Input
             type="search"
@@ -74,7 +79,7 @@ const SearchBar = () => {
         <Button type="submit" className="rounded-none rounded-r-lg">
           <Link href={`/search/${searchQuery}`}>Search</Link>
         </Button>
-      </div>
+      </form>
     </div>
   );
 }

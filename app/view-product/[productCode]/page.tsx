@@ -5,6 +5,9 @@ import { Product } from "@/app/firebase/products";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/app/configs/firebase";
 import { Spinner } from "@/app/components/Spinner";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { FaFacebook } from "react-icons/fa";
 
 const ViewProduct = ({
   params: productCode,
@@ -30,6 +33,7 @@ const ViewProduct = ({
           colors: doc.data().colors,
           category: doc.data().category,
           productCode: doc.data().productCode,
+          description: doc.data().description,
           stock: doc.data().stock,
         }));
         setProduct(product);
@@ -70,7 +74,9 @@ const ViewProduct = ({
               <div className="flex flex-col">
                 <p className="font-semibold text-sm">
                   Product code:{" "}
-                  <span className="font-normal uppercase">{product.productCode}</span>
+                  <span className="font-normal uppercase">
+                    {product.productCode}
+                  </span>
                 </p>
                 <p className="text-4xl font-semibold my-3">{product.name}</p>
                 <p className="font-semibold mb-4 text-lg">
@@ -93,8 +99,14 @@ const ViewProduct = ({
                   <span className="font-semibold"> Colors:</span>{" "}
                   {product.colors}
                 </p>
+                <Button className="bg-blue-500 mt-6">
+                  <Link href="https://m.me/bestsneakersshoes" className="flex items-center gap-2">
+                   <span className="text-md"><FaFacebook /></span> Message us on facebook
+                  </Link>
+                </Button>
               </div>
             </div>
+            <div className="m-6"><span className="font-semibold">Description: </span>{ product.description }</div>
           </div>
         ))
       )}

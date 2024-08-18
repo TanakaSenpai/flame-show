@@ -46,7 +46,10 @@ const MobileNav = () => {
             </SheetContent>
           </Sheet>
         </div>
+        <div className="mr-10">
+
         <SearchBar />
+        </div>
       </nav>
     </section>
   );

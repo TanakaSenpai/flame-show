@@ -6,7 +6,6 @@ interface Props {
   data: { name: string; imgUrls: string[]; price: number; productCode: string }[];
 }
 const ProductsGrid = ({ title, data }: Props) => {
-  console.log(data)
   return (
     <div className="flex flex-col items-center justify-center my-5 w-full">
       <h1 className="font-semibold text-3xl mt-6">{title}</h1>

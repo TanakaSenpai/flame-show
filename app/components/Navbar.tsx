@@ -22,10 +22,10 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="px-32 py-4 lg:py-2 flex justify-between items-center w-full bg-light-blue">
-          <div className="">
+          <div >
             <Logo />
           </div>
-          <div className="">
+          <div >
             <SearchBar />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../configs/firebase";
 
 export interface Product {
@@ -10,6 +10,7 @@ export interface Product {
   category: string;
   productCode: string;
   stock: string;
+  createdAt?: string;
 }
 
 
@@ -31,7 +32,8 @@ const addPost = async (data: Product) => {
 
 const getPosts = async () => {
   const collectionRef = collection(db, "posts");
-  const docRef = await getDocs(collectionRef);
+  const q = query(collectionRef, orderBy("createdAt", "desc"))
+  const docRef = await getDocs(q);
   const productList = docRef.docs.map(doc => {
     return {
       id: doc.id,
@@ -57,4 +59,9 @@ const updateProduct = async (
   });
 };
 
-export { checkCodeExists, addPost, getPosts, updateProduct };
+const deleteProduct = async (id: string) => {
+  const docRef = doc(db, "posts", id);
+  await deleteDoc(docRef);
+}
+
+export { checkCodeExists, addPost, getPosts, updateProduct, deleteProduct };

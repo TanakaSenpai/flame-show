@@ -1,6 +1,7 @@
 "use client";
 import { Spinner } from "@/app/components/Spinner";
 import { storage } from "@/app/configs/firebase";
+import { Timestamp } from "firebase/firestore";
 import { getCategories } from "@/app/firebase/categories";
 import { addPost, checkCodeExists } from "@/app/firebase/products";
 import { Button } from "@/components/ui/button";
@@ -33,6 +34,8 @@ const AddProductPage = () => {
   const [colors, setColors] = useState("");
   const [productCode, setCode] = useState("");
   const [stock, setStock] = useState("");
+  const createdAt = new Date().toLocaleString()
+  
 
 
   const [categories, setCategories] = useState<
@@ -109,6 +112,7 @@ const handleSubmit = async (e: FormEvent) => {
       category,
       productCode,
       stock,
+      createdAt
     });
 
     toast.success("Product added successfully!");

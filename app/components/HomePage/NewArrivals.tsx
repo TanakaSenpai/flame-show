@@ -17,7 +17,7 @@ const NewArrivals = () => {
     fetchProducts()
   }, [])
   
-  return <ProductsGrid title="New Arrivals 🔥" data={products} />;
+  return <ProductsGrid title="New Arrivals 🔥" data={products.slice(0,6)} />;
 };
 
 export default NewArrivals;

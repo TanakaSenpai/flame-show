@@ -11,8 +11,18 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { toast } from 'sonner';
+import { deleteProduct } from '@/app/firebase/products';
 
-const AdminProductsDelete = ({id}: {id: string}) => {
+const AdminProductsDelete = ({ id }: { id: string }) => {
+  const handleClick = async () => {
+    try {
+      await deleteProduct(id);
+      toast.error("Product deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete product: " + error);
+    }
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -29,7 +39,7 @@ const AdminProductsDelete = ({id}: {id: string}) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction className='bg-destructive hover:bg-destructive/90'>
+          <AlertDialogAction className='bg-destructive hover:bg-destructive/90' onClick={handleClick}>
               OK
           </AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>

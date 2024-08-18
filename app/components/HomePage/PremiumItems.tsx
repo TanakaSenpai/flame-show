@@ -1,20 +1,20 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import ProductsGrid from "../ProductsGrid";
-import { getPosts, Product } from "@/app/firebase/products";
+import { getProducts, Product } from "@/app/firebase/products";
 
 const PremiumItems = () => {
   const [products, setProducts] = useState<Product[]>([])
   useEffect(() => {
-    const getProducts = async () => {
+    const fetchProducts = async () => {
       try {
-        const fetchedProducts = await getPosts();
+        const fetchedProducts = await getProducts();
         setProducts(fetchedProducts);
       } catch (error) {
         console.log(error)
       }
     }
-    getProducts()
+    fetchProducts()
   }, [])
   return <ProductsGrid title="Premium Items ✨" data={products.slice(0, 6)} />;
 };

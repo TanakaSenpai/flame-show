@@ -16,7 +16,7 @@ const CategoryPage = ({ params: category }: { params: { category: string } }) =>
     const fetchProducts = async (cat: string) => {
       setLoading(true)
     try {
-        const q = query(collection(db, "posts"), where("category", "==", cat));
+        const q = query(collection(db, "products"), where("category", "==", cat));
         const querySnapshot = await getDocs(q);
         const products = querySnapshot.docs.map(
           (doc) =>

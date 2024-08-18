@@ -19,7 +19,7 @@ const ViewProduct = ({
     const fetchProduct = async (pCode: string) => {
       setLoading(true);
       try {
-        const collectionRef = collection(db, "posts");
+        const collectionRef = collection(db, "products");
         const q = query(collectionRef, where("productCode", "==", pCode));
         const qSnap = await getDocs(q);
         const product = qSnap.docs.map((doc) => ({

@@ -3,7 +3,7 @@ import { Spinner } from "@/app/components/Spinner";
 import { storage } from "@/app/configs/firebase";
 import { Timestamp } from "firebase/firestore";
 import { getCategories } from "@/app/firebase/categories";
-import { addPost, checkCodeExists } from "@/app/firebase/products";
+import { addProduct, checkCodeExists } from "@/app/firebase/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -79,7 +79,7 @@ const handleSubmit = async (e: FormEvent) => {
 
     // Check for duplicate product code before adding data to Firestore
     const isDupliCode = await checkCodeExists(
-      "posts",
+      "products",
       "productCode",
       productCode
     );
@@ -104,7 +104,7 @@ const handleSubmit = async (e: FormEvent) => {
     }
 
     // Create a Firestore document for the product
-    await addPost({
+    await addProduct({
       name,
       imgUrls,
       price,

@@ -3,7 +3,7 @@ import React from 'react'
 
 const DashboardCard = ({title, number, bg} : {title: string, number: number, bg:string}) => {
   return (
-      <Card className={`px-4 ${bg}`}>
+      <Card className={`px-4 ${bg} w-52 h-32`}>
           <CardHeader className='text-2xl text-white font-bold'>{title}</CardHeader>
           <CardContent className='text-xl text-white font-bold'>{ number }</CardContent>
     </Card>

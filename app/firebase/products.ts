@@ -25,13 +25,13 @@ const checkCodeExists = async (
   return querySnapshot.size > 0;
 };
 
-const addPost = async (data: Product) => {
-  const collectionRef = collection(db, "posts");
+const addProduct = async (data: Product) => {
+  const collectionRef = collection(db, "products");
   await addDoc(collectionRef, data);
 };
 
-const getPosts = async () => {
-  const collectionRef = collection(db, "posts");
+const getProducts = async () => {
+  const collectionRef = collection(db, "products");
   const q = query(collectionRef, orderBy("createdAt", "desc"))
   const docRef = await getDocs(q);
   const productList = docRef.docs.map(doc => {
@@ -48,7 +48,7 @@ const updateProduct = async (
   id: string,
   { name, category, price, colors, productCode, stock }: Product
 ) => {
-  const docRef = doc(db, "posts", id!);
+  const docRef = doc(db, "products", id!);
   await updateDoc(docRef, {
     name,
     category,
@@ -60,8 +60,8 @@ const updateProduct = async (
 };
 
 const deleteProduct = async (id: string) => {
-  const docRef = doc(db, "posts", id);
+  const docRef = doc(db, "products", id);
   await deleteDoc(docRef);
 }
 
-export { checkCodeExists, addPost, getPosts, updateProduct, deleteProduct };
+export { checkCodeExists, addProduct, getProducts, updateProduct, deleteProduct };

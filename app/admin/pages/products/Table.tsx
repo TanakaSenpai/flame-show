@@ -23,7 +23,7 @@ const AdminProductsTable = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const collectionRef = collection(db, "posts");
+        const collectionRef = collection(db, "products");
         const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
           const fetchedProducts = snapshot.docs.map((doc) => ({
             id: doc.id,

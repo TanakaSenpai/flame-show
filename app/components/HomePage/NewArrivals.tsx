@@ -1,14 +1,14 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import ProductsGrid from "../ProductsGrid";
-import { getPosts, Product } from "@/app/firebase/products";
+import { getProducts, Product } from "@/app/firebase/products";
 
 const NewArrivals = () => {
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const products = await getPosts();
+        const products = await getProducts();
         setProducts(products);
       } catch (error) {
         console.log(error)

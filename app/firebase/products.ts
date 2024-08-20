@@ -7,7 +7,7 @@ import {
   orderBy,
   query,
   updateDoc,
-  where
+  where,
 } from "firebase/firestore";
 import { db } from "../configs/firebase";
 
@@ -86,34 +86,47 @@ const deleteProduct = async (id: string) => {
 };
 
 const searchProduct = async (searchQuery: string) => {
-  const productCollection = collection(db, "products")
+  const productCollection = collection(db, "products");
   const q = query(
     productCollection,
     where("name", ">=", searchQuery),
     where("name", "<=", searchQuery + "\uf8ff")
   );
-  const snapshot = await getDocs(q)
+  const snapshot = await getDocs(q);
   const searchedProducts = snapshot.docs.map((product) => {
     return {
       id: product.id,
-     ...product.data()
-    } as Product
-  })
+      ...product.data(),
+    } as Product;
+  });
   return searchedProducts;
-}
+};
 
 const addReview = async (data: Review) => {
-  const reviewCollection = collection(db, "reviews")
-  await addDoc(reviewCollection, data)
-}
+  const reviewCollection = collection(db, "reviews");
+  await addDoc(reviewCollection, data);
+};
 
+const getReviews = async () => {
+  const reviewsCollection = collection(db, "reviews");
+  const q = query(reviewsCollection, orderBy("rating", "desc"));
+  const docsRef = await getDocs(q);
+  const reviewList = docsRef.docs.map(
+    (review) =>
+      ({
+        id: review.id,
+        ...review.data(),
+      } as Review)
+  );
+};
 
 export {
   checkCodeExists,
   addProduct,
   getProducts,
   updateProduct,
-  deleteProduct, 
+  deleteProduct,
   searchProduct,
-  addReview
+  addReview,
+  getReviews
 };

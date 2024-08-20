@@ -1,13 +1,14 @@
 "use client";
 import React, { FormEvent, useState } from "react";
+import { toast } from "sonner";
 import { Spinner } from "@/app/components/Spinner";
 import { addReview } from "@/app/firebase/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-    Select,
-    SelectGroup,
+  Select,
+  SelectGroup,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -15,22 +16,20 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { FirebaseError } from "firebase/app";
-import { toast } from "sonner";
 
-const AddReview = ({ pId }: { pId: string }) => {
+const AddReview = ({ productId }: { productId: string }) => {
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const productId = pId;
   const createdAt = new Date().toLocaleString();
   const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (rating === 0) return toast.error("Please select a rating");
-    setLoading(true);
     try {
+      setLoading(true);
       await addReview({ name, title, rating, review, productId, createdAt });
       setName("");
       setTitle("");
@@ -51,7 +50,7 @@ const AddReview = ({ pId }: { pId: string }) => {
       <h2 className="text-2xl my-4">Add a review</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <Label onClick={() => toast.info("nothing")}>Your name</Label>
+          <Label>Your name</Label>
           <Input
             type="text"
             placeholder="Enter your name"

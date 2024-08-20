@@ -28,12 +28,6 @@ const AdminLayout = ({
           <AdminNavbar />
           <div className="p-5">
             {children}
-            <Toaster toastOptions={{ 
-              style: {
-                border: "1px solid gray",
-                boxShadow: "inherit"
-              }
-             }} richColors />
           </div>
         </div>
       </div>

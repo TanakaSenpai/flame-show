@@ -24,7 +24,7 @@ const LayoutCheck = ({
             <div className="">{children}</div>
             <footer><Footer /></footer>
         </main>
-      )}
+      )} 
     </>
   );
 };

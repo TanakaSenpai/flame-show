@@ -10,6 +10,7 @@ import Link from "next/link";
 import { FaFacebook } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
 import AddReview from "./AddReview";
+import ProductReviews from "./ProductReviews";
 
 const ViewProduct = ({
   params: productCode,
@@ -118,7 +119,10 @@ const ViewProduct = ({
             <div className="mx-6 mt-3 mb-10">
               <h2 className="text-3xl">Product Reviews</h2>
               <div className="">
-                <AddReview pId={product.id!} />
+                <ProductReviews productId={product.id!} />
+              </div>
+              <div className="">
+                <AddReview productId={product.id!} />
               </div>
             </div>
           </div>

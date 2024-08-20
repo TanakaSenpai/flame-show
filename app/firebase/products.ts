@@ -24,6 +24,16 @@ export interface Product {
   createdAt?: string;
 }
 
+export interface Review {
+  id?: string;
+  name: string;
+  title: string;
+  rating: number;
+  review: string;
+  productId: string;
+  createdAt?: string;
+}
+
 const checkCodeExists = async (
   collectionName: string,
   fieldName: string,
@@ -92,6 +102,11 @@ const searchProduct = async (searchQuery: string) => {
   return searchedProducts;
 }
 
+const addReview = async (data: Review) => {
+  const reviewCollection = collection(db, "reviews")
+  await addDoc(reviewCollection, data)
+}
+
 
 export {
   checkCodeExists,
@@ -99,5 +114,6 @@ export {
   getProducts,
   updateProduct,
   deleteProduct, 
-  searchProduct
+  searchProduct,
+  addReview
 };

@@ -8,6 +8,8 @@ import { Spinner } from "@/app/components/Spinner";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FaFacebook } from "react-icons/fa";
+import { Separator } from "@/components/ui/separator";
+import AddReview from "./AddReview";
 
 const ViewProduct = ({
   params: productCode,
@@ -37,8 +39,6 @@ const ViewProduct = ({
           stock: doc.data().stock,
         }));
         setProduct(product);
-
-        return product;
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -51,17 +51,15 @@ const ViewProduct = ({
     fetchProduct(pCode);
   }, [pCode]);
 
+ 
+
   return (
     <>
       {isLoading ? (
         <div className="h-[60vh] flex justify-center items-center">
           <Spinner className="w-10" />
         </div>
-      ) : products.length == 0 ? (
-        <h1 className="text-center text-red-600 text-6xl h-[50vh]">
-          Not found
-        </h1>
-      ) : (
+      ) : products.length !== 0 ? (
         products.map((product: Product) => (
           <div key={product.id}>
             <p className="p-4 capitalize text-sm font-semibold">
@@ -100,15 +98,35 @@ const ViewProduct = ({
                   {product.colors}
                 </p>
                 <Button className="bg-blue-500 mt-6">
-                  <Link href="https://m.me/bestsneakersshoes" className="flex items-center gap-2">
-                   <span className="text-md"><FaFacebook /></span> Message us on facebook
+                  <Link
+                    href="https://m.me/bestsneakersshoes"
+                    className="flex items-center gap-2"
+                  >
+                    <span className="text-md">
+                      <FaFacebook />
+                    </span>{" "}
+                    Message us on facebook
                   </Link>
                 </Button>
               </div>
             </div>
-            <div className="m-6"><span className="font-semibold">Description: </span>{ product.description }</div>
+            <div className="m-6">
+              <span className="font-semibold">Description: </span>
+              {product.description}
+            </div>
+            <Separator className="w-4/5 mx-6" />
+            <div className="mx-6 mt-3 mb-10">
+              <h2 className="text-3xl">Product Reviews</h2>
+              <div className="">
+                <AddReview pId={product.id!} />
+              </div>
+            </div>
           </div>
         ))
+      ) : (
+        <h1 className="text-center text-red-600 text-6xl h-[50vh]">
+          Not found
+        </h1>
       )}
     </>
   );

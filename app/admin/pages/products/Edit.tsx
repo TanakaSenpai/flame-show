@@ -31,7 +31,6 @@ interface Props {
 }
 
 const AdminProductsEdit = ({ item }: Props) => {
-  console.log(item)
   const [name, setName] = useState(item.name);
   const imgUrls = item.imgUrls;
   const [category, setCategory] = useState(item.category);

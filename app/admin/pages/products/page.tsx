@@ -7,12 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Product } from "@/app/firebase/products";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/configs/firebase";
+import { Spinner } from "@/app/components/Spinner";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
     const [searchQuery, setSearchQuery] = useState("");
-    const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  
     useEffect(() => {
       const fetchProducts = async () => {
         try {
@@ -59,7 +61,7 @@ const ProductsPage = () => {
         <Button>Add Product</Button>
         </Link>
       </div>
-      <AdminProductsTable products={searchQuery == "" ? products : filteredProducts } isLoading={isLoading} />
+      {isLoading? <div className="w-full h-screen flex justify-center"><Spinner className="w-10" /></div> :<AdminProductsTable products={searchQuery == "" ? products : filteredProducts } />}
     </div>
   );
 };

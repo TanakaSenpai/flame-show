@@ -75,11 +75,29 @@ const deleteProduct = async (id: string) => {
   await deleteDoc(docRef);
 };
 
+const searchProduct = async (searchQuery: string) => {
+  const productCollection = collection(db, "products")
+  const q = query(
+    productCollection,
+    where("name", ">=", searchQuery),
+    where("name", "<=", searchQuery + "\uf8ff")
+  );
+  const snapshot = await getDocs(q)
+  const searchedProducts = snapshot.docs.map((product) => {
+    return {
+      id: product.id,
+     ...product.data()
+    } as Product
+  })
+  return searchedProducts;
+}
+
 
 export {
   checkCodeExists,
   addProduct,
   getProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct, 
+  searchProduct
 };

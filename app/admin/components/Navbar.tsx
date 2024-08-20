@@ -6,8 +6,8 @@ const AdminNavbar = () => {
     <div className="h-12 w-full px-10 shadow-[rgba(0,0,15,0.5)_7px_2px_5px_0px] flex items-center justify-end">
       <p className="text-lg mr-6">Hello Admin!</p>
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarImage src="https://github.com/shadcn.png" alt="admin" />
+        <AvatarFallback>admin</AvatarFallback>
       </Avatar>
     </div>
   );

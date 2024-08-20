@@ -1,7 +1,6 @@
 "use client";
 import { Spinner } from "@/app/components/Spinner";
 import { storage } from "@/app/configs/firebase";
-import { Timestamp } from "firebase/firestore";
 import { getCategories } from "@/app/firebase/categories";
 import { addProduct, checkCodeExists } from "@/app/firebase/products";
 import { Button } from "@/components/ui/button";
@@ -52,9 +51,11 @@ const AddProductPage = () => {
 
     fetchCategories();
   }, []);
+  
 
   const selectImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files as FileList) || [];
+
     setImages(files);
   };
 
@@ -163,6 +164,7 @@ const handleSubmit = async (e: FormEvent) => {
             id="images"
             className="border-slate-400"
             multiple
+            accept="images/*"
             required
             onChange={selectImages}
           />
@@ -230,7 +232,7 @@ const handleSubmit = async (e: FormEvent) => {
         </div>
         <div className="flex flex-col gap-4">
           <Label htmlFor="code" className="text-nowrap">
-            Descriptiondescriptionription:
+            Description:
           </Label>
           <Textarea placeholder="Type description here." onChange={(e) => setDescription(e.target.value)} />
         </div>

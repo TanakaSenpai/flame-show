@@ -26,6 +26,8 @@
     "framer-motion": "^11.2.10",
     "lucide-react": "^0.428.0",
     "next": "14.2.3",
+    "npm": "^10.8.2",
+    "npx": "^3.0.0",
     "prisma": "^5.15.1",
     "react": "^18",
     "react-dom": "^18",
